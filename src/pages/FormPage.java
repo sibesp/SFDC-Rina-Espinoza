@@ -110,8 +110,8 @@ public class FormPage extends BasePage {
     public FormPage selectLookupValue(String fieldName, String selectedValue) {
         //String fieldText = "//label[text()='" +fieldName + "' ]/following::input[@type='text']";
         //String lookupLocator = "img.lookupIconOn";
+        String windowID = driver.getWindowHandle();
         driver.findElement(By.className("lookupIcon")).click();
-
 
         try {
             Set<String> setWindows = driver.getWindowHandles();
@@ -124,7 +124,7 @@ public class FormPage extends BasePage {
         } catch (WebDriverException e) {
             throw new WebDriverException(e);
         } finally {
-            driver.switchTo().defaultContent();
+            driver.switchTo().window(windowID);
         }
         return this;
     }

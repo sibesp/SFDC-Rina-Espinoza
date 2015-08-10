@@ -9,6 +9,7 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * Created by Rina Espinoza on 8/9/2015.
@@ -26,6 +27,18 @@ public class DetailsPage extends BasePage {
     @FindBy(name = "delete")
     @CacheLookup
     public WebElement deleteBtn;
+
+    @FindBy(xpath = "//select[@class='title']")
+    @CacheLookup
+    private WebElement ViewNameText;
+
+    @FindBy(linkText = "Edit")
+    @CacheLookup
+    public WebElement editLink;
+
+    @FindBy(linkText = "Delete")
+    @CacheLookup
+    public WebElement deleteLink;
 
     public DetailsPage(WebDriver driver) {
         super();
@@ -59,4 +72,30 @@ public class DetailsPage extends BasePage {
         }
     }
 
+    public String getViewName() {
+        Select select = new Select(ViewNameText);
+        return select.getFirstSelectedOption().getText();
+    }
+
+
+    public FormPage clickEditViewLink() {
+        wait.until(ExpectedConditions
+                .visibilityOf(editLink));
+        editLink.click();
+        return new FormPage(driver);
+    }
+
+    public TabPage clickDeleteViewLink() {
+        wait.until(ExpectedConditions
+                .visibilityOf(deleteLink));
+        deleteLink.click();
+
+        try {
+            Alert alert = driver.switchTo().alert();
+            alert.accept();
+        } finally {
+
+            return new TabPage(driver);
+        }
+    }
 }
