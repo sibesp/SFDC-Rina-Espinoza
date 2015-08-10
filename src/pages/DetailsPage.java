@@ -20,13 +20,21 @@ public class DetailsPage extends BasePage {
     @CacheLookup
     private WebElement objectNameText;
 
+    @FindBy(className = "pageDescription")
+    @CacheLookup
+    private WebElement pageDescriptionText;
+
     @FindBy(name = "edit")
     @CacheLookup
     public WebElement editBtn;
 
     @FindBy(name = "delete")
     @CacheLookup
-    public WebElement deleteBtn;
+    public WebElement deleteAccountBtn;
+
+    @FindBy(name = "del")
+    @CacheLookup
+    public WebElement deleteOppBtn;
 
     @FindBy(xpath = "//select[@class='title']")
     @CacheLookup
@@ -50,6 +58,10 @@ public class DetailsPage extends BasePage {
         return objectNameText.getText();
     }
 
+    public String getPageDescription() {
+        return pageDescriptionText.getText();
+    }
+
 
     public FormPage clickEditBtn() {
         wait.until(ExpectedConditions
@@ -60,8 +72,22 @@ public class DetailsPage extends BasePage {
 
     public TabPage clickDeleteBtn() {
         wait.until(ExpectedConditions
-                .visibilityOf(deleteBtn));
-        deleteBtn.click();
+                .visibilityOf(deleteAccountBtn));
+        deleteAccountBtn.click();
+
+        try {
+            Alert alert = driver.switchTo().alert();
+            alert.accept();
+        } finally {
+
+            return new TabPage(driver);
+        }
+    }
+
+    public TabPage clickDeleteOppBtn() {
+        wait.until(ExpectedConditions
+                .visibilityOf(deleteOppBtn));
+        deleteOppBtn.click();
 
         try {
             Alert alert = driver.switchTo().alert();
@@ -97,5 +123,16 @@ public class DetailsPage extends BasePage {
 
             return new TabPage(driver);
         }
+    }
+
+
+    public String getFieldValue(String fieldName) {
+        String fieldXpath = "//td[text()='" + fieldName + "' ]/following::div";
+        return driver.findElement(By.xpath(fieldXpath)).getText();
+    }
+
+
+    public TabBar goToTabBar() {
+        return new TabBar(driver);
     }
 }

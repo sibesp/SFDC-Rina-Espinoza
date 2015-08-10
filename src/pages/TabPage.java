@@ -26,6 +26,10 @@ public class TabPage extends BasePage {
     @CacheLookup
     private WebElement logout;
 
+    @FindBy(css = "th..dataCell   > a")
+    @CacheLookup
+    private WebElement recentCreatedObjectLink;
+
     //a[@title='Logout']
     public TabPage(WebDriver driver) {
         super();
@@ -50,6 +54,17 @@ public class TabPage extends BasePage {
         driver.findElement(By.id("userNav")).click();
         logout.click();
         driver.quit();
+    }
+
+    public TabBar goToTabBar() {
+        return new TabBar(driver);
+    }
+
+    public DetailsPage clickRecentCreatedObjectLink() {
+        wait.until(ExpectedConditions
+                .visibilityOf(recentCreatedObjectLink));
+        recentCreatedObjectLink.click();
+        return new DetailsPage(driver);
     }
 
 }
