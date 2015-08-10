@@ -12,7 +12,7 @@ import pages.*;
 public class Exam {
     FormPage accountFormPage;
     DetailsPage accountDetails;
-    String accountName = "MyExamAccount";
+    String accountName = "MyAccountTest";
     FormPage opportunityFormPage;
     DetailsPage opportunityDetails;
 
@@ -30,7 +30,7 @@ public class Exam {
     @Test
     public void createNewOpportunity() {
 
-        String opportunityName = "Opportunity";
+        String opportunityName = "OpportunityTest";
         String closeDate = "10/05/2015";
         String stageSelected = "Prospecting";
 
@@ -56,8 +56,8 @@ public class Exam {
         TabPage opportunityTab = opportunityDetails.clickDeleteOppBtn();
         TabBar tabBar = opportunityTab.goToTabBar();
         TabPage accountTabPage = tabBar.clickAccountLinkText();
-        //accountDetails = accountTabPage.clickRecentCreatedObjectLink();
-        //accountTabPage = accountDetails.clickDeleteBtn();
+        accountDetails = accountTabPage.clickRecentCreatedObjectLink(accountName);
+        accountTabPage = accountDetails.clickDeleteBtn();
         accountTabPage.clickLogoutBtn();
     }
 }

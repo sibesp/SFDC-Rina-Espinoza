@@ -26,9 +26,6 @@ public class TabPage extends BasePage {
     @CacheLookup
     private WebElement logout;
 
-    @FindBy(css = "th..dataCell   > a")
-    @CacheLookup
-    private WebElement recentCreatedObjectLink;
 
     //a[@title='Logout']
     public TabPage(WebDriver driver) {
@@ -60,10 +57,10 @@ public class TabPage extends BasePage {
         return new TabBar(driver);
     }
 
-    public DetailsPage clickRecentCreatedObjectLink() {
-        wait.until(ExpectedConditions
-                .visibilityOf(recentCreatedObjectLink));
-        recentCreatedObjectLink.click();
+    public DetailsPage clickRecentCreatedObjectLink(String name) {
+
+        String fieldXpath = "//a[text()='" + name + "' ]";
+        driver.findElement(By.xpath(fieldXpath)).click();
         return new DetailsPage(driver);
     }
 
